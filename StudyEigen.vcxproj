@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0eb7a08e-4e25-48d1-8830-b624a92b12c5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>X64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AccessorLevels.h" />
+    <ClInclude Include="add_const_on_value_type.h" />
+    <ClInclude Include="add_const_on_value_type_if_arithmetic.h" />
+    <ClInclude Include="AlignmentType.h" />
+    <ClInclude Include="compute_default_alignment.h" />
+    <ClInclude Include="compute_default_alignment_helper.h" />
+    <ClInclude Include="compute_matrix_flags.h" />
+    <ClInclude Include="conditional.h" />
+    <ClInclude Include="default_packet_traits.h" />
+    <ClInclude Include="Dense.h" />
+    <ClInclude Include="DenseCoeffsBase.h" />
+    <ClInclude Include="DenseStorage.h" />
+    <ClInclude Include="DirectAccessBit.h" />
+    <ClInclude Include="Dynamic.h" />
+    <ClInclude Include="EigenBase.h" />
+    <ClInclude Include="EIGEN_CONSTEXPR.h" />
+    <ClInclude Include="EIGEN_DEFAULT_DENSE_INDEX_TYPE.h" />
+    <ClInclude Include="EIGEN_DEVICE_FUNC.h" />
+    <ClInclude Include="EIGEN_FAST_MATH.h" />
+    <ClInclude Include="EIGEN_MAX_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_MAX_STATIC_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_MIN_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_NOEXCEPT.h" />
+    <ClInclude Include="eigen_packet_wrapper.h" />
+    <ClInclude Include="EIGEN_UNALIGNED_VECTORIZE.h" />
+    <ClInclude Include="evaluator.h" />
+    <ClInclude Include="evaluator_traits.h" />
+    <ClInclude Include="evaluator_traits_base.h" />
+    <ClInclude Include="find_best_packet.h" />
+    <ClInclude Include="find_best_packet_helper.h" />
+    <ClInclude Include="Index.h" />
+    <ClInclude Include="is_arithmetic.h" />
+    <ClInclude Include="is_same.h" />
+    <ClInclude Include="LinearAccessBit.h" />
+    <ClInclude Include="LrfDerived.h" />
+    <ClInclude Include="LrfHasCols.h" />
+    <ClInclude Include="LrfHasRows.h" />
+    <ClInclude Include="LrfHasEvalTo.h" />
+    <ClInclude Include="LRF_AVX.h" />
+    <ClInclude Include="LRF_SSE.h" />
+    <ClInclude Include="LRF_STRONG_INLINE.h" />
+    <ClInclude Include="LvalueBit.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MatrixXpr.h" />
+    <ClInclude Include="NestByRefBit.h" />
+    <ClInclude Include="Packet4f.h" />
+    <ClInclude Include="Packet4i.h" />
+    <ClInclude Include="Packet8f.h" />
+    <ClInclude Include="PacketAccessBit.h" />
+    <ClInclude Include="packet_traits.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="RowMajorBit.h" />
+    <ClInclude Include="size_at_compile_time.h" />
+    <ClInclude Include="StorageOptions.h" />
+    <ClInclude Include="SupportAvx512.h" />
+    <ClInclude Include="traits.h" />
+    <ClInclude Include="unary_evaluator.h" />
+    <ClInclude Include="unpacket_traits.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TestDenseCoeffsBase.cpp" />
+    <ClCompile Include="TestEigenBase.cpp" />
+    <ClCompile Include="TestSupportAvx512.cpp" />
+    <ClCompile Include="Test_compute_default_alignment.cpp" />
+    <ClCompile Include="Test_compute_matrix_flags.cpp" />
+    <ClCompile Include="Test_find_best_packet.cpp" />
+    <ClCompile Include="Test_packet_traits.cpp" />
+    <ClCompile Include="Test_traits.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
+  </Target>
+</Project>

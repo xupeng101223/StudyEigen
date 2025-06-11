@@ -1,0 +1,17 @@
+# 忽略 VS 相关目录
+.vs/
+
+# 忽略常见 IDE 文件夹和临时文件
+.idea/
+*.suo
+*.user
+*.vcxproj.user
+*.log
+*.tmp
+*.swp
+
+# 忽略构建产物
+build/
+out/
+bin/
+x64/

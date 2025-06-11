@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TestEigenBase.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSupportAvx512.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_packet_traits.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_find_best_packet.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_compute_matrix_flags.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_compute_default_alignment.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_traits.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestDenseCoeffsBase.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="LRF_SSE.h" />
+    <ClInclude Include="LRF_AVX.h" />
+    <ClInclude Include="Packet4f.h" />
+    <ClInclude Include="Packet8f.h" />
+    <ClInclude Include="EIGEN_FAST_MATH.h" />
+    <ClInclude Include="compute_matrix_flags.h" />
+    <ClInclude Include="DirectAccessBit.h" />
+    <ClInclude Include="LvalueBit.h" />
+    <ClInclude Include="NestByRefBit.h" />
+    <ClInclude Include="StorageOptions.h" />
+    <ClInclude Include="RowMajorBit.h" />
+    <ClInclude Include="size_at_compile_time.h" />
+    <ClInclude Include="Dynamic.h" />
+    <ClInclude Include="find_best_packet.h" />
+    <ClInclude Include="find_best_packet_helper.h" />
+    <ClInclude Include="unpacket_traits.h" />
+    <ClInclude Include="eigen_packet_wrapper.h" />
+    <ClInclude Include="Packet4i.h" />
+    <ClInclude Include="AlignmentType.h" />
+    <ClInclude Include="is_same.h" />
+    <ClInclude Include="compute_default_alignment.h" />
+    <ClInclude Include="EIGEN_MAX_STATIC_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_MAX_ALIGN_BYTES.h" />
+    <ClInclude Include="compute_default_alignment_helper.h" />
+    <ClInclude Include="EIGEN_MIN_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_UNALIGNED_VECTORIZE.h" />
+    <ClInclude Include="PacketAccessBit.h" />
+    <ClInclude Include="MatrixXpr.h" />
+    <ClInclude Include="LinearAccessBit.h" />
+    <ClInclude Include="conditional.h" />
+    <ClInclude Include="is_arithmetic.h" />
+    <ClInclude Include="add_const_on_value_type_if_arithmetic.h" />
+    <ClInclude Include="add_const_on_value_type.h" />
+    <ClInclude Include="evaluator.h" />
+    <ClInclude Include="AccessorLevels.h" />
+    <ClInclude Include="default_packet_traits.h" />
+    <ClInclude Include="Dense.h" />
+    <ClInclude Include="DenseCoeffsBase.h" />
+    <ClInclude Include="EigenBase.h" />
+    <ClInclude Include="EIGEN_CONSTEXPR.h" />
+    <ClInclude Include="EIGEN_DEFAULT_DENSE_INDEX_TYPE.h" />
+    <ClInclude Include="EIGEN_DEVICE_FUNC.h" />
+    <ClInclude Include="EIGEN_NOEXCEPT.h" />
+    <ClInclude Include="Index.h" />
+    <ClInclude Include="LrfDerived.h" />
+    <ClInclude Include="LrfHasCols.h" />
+    <ClInclude Include="LrfHasRows.h" />
+    <ClInclude Include="LrfHasEvalTo.h" />
+    <ClInclude Include="LRF_STRONG_INLINE.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="packet_traits.h" />
+    <ClInclude Include="SupportAvx512.h" />
+    <ClInclude Include="traits.h" />
+    <ClInclude Include="unary_evaluator.h" />
+    <ClInclude Include="evaluator_traits.h" />
+    <ClInclude Include="evaluator_traits_base.h" />
+    <ClInclude Include="DenseStorage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Test">
+      <UniqueIdentifier>{0a11279e-cf6e-46ae-ba85-9439ab1756ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+</Project>
