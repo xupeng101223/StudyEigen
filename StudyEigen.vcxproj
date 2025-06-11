@@ -163,20 +163,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestDenseCoeffsBase.cpp" />
-    <ClCompile Include="TestEigenBase.cpp" />
-    <ClCompile Include="TestSupportAvx512.cpp" />
-    <ClCompile Include="Test_compute_default_alignment.cpp" />
-    <ClCompile Include="Test_compute_matrix_flags.cpp" />
-    <ClCompile Include="Test_find_best_packet.cpp" />
-    <ClCompile Include="Test_packet_traits.cpp" />
-    <ClCompile Include="Test_traits.cpp" />
+    <ClCompile Include="Test\TestDenseCoeffsBase.cpp" />
+    <ClCompile Include="Test\TestEigenBase.cpp" />
+    <ClCompile Include="Test\TestSupportAvx512.cpp" />
+    <ClCompile Include="Test\Test_compute_default_alignment.cpp" />
+    <ClCompile Include="Test\Test_compute_matrix_flags.cpp" />
+    <ClCompile Include="Test\Test_find_best_packet.cpp" />
+    <ClCompile Include="Test\Test_packet_traits.cpp" />
+    <ClCompile Include="Test\Test_traits.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="index.html" />
+    <None Include="intro.html" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

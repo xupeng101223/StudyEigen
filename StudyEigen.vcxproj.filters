@@ -2,28 +2,28 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="TestEigenBase.cpp">
+    <ClCompile Include="Test\Test_compute_default_alignment.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="TestSupportAvx512.cpp">
+    <ClCompile Include="Test\Test_compute_matrix_flags.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test_packet_traits.cpp">
+    <ClCompile Include="Test\Test_find_best_packet.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test_find_best_packet.cpp">
+    <ClCompile Include="Test\Test_packet_traits.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test_compute_matrix_flags.cpp">
+    <ClCompile Include="Test\Test_traits.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test_compute_default_alignment.cpp">
+    <ClCompile Include="Test\TestDenseCoeffsBase.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test_traits.cpp">
+    <ClCompile Include="Test\TestEigenBase.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="TestDenseCoeffsBase.cpp">
+    <ClCompile Include="Test\TestSupportAvx512.cpp">
       <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,14 +88,18 @@
     <ClInclude Include="DenseStorage.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Test">
-      <UniqueIdentifier>{0a11279e-cf6e-46ae-ba85-9439ab1756ee}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
+    <None Include="index.html" />
+    <None Include="intro.html">
+      <Filter>Docs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt" />
+    <Filter Include="Test">
+      <UniqueIdentifier>{115ce371-48de-484e-beec-5349198afb13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Docs">
+      <UniqueIdentifier>{49896659-a4b6-49f9-b040-8f37a1c2e9ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

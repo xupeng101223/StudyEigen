@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        <title>文档Demo主页</title>
+        <style>
+                body {
+                        font-family: sans-serif;
+                }
+
+                #menu {
+                        margin-bottom: 20px;
+                }
+
+                        #menu a {
+                                margin-right: 12px;
+                                color: #0072c6;
+                                text-decoration: none;
+                        }
+
+                                #menu a.active {
+                                        font-weight: bold;
+                                        text-decoration: underline;
+                                }
+
+                #content {
+                        border-top: 1px solid #eee;
+                        padding-top: 18px;
+                        min-height: 200px;
+                }
+        </style>
+</head>
+<body>
+        <h1>文档主页 Demo</h1>
+        <div id="menu"></div>
+        <div id="content"><em>请选择左侧菜单查看文档内容。</em></div>
+        <script>
+                // ---- 手动配置docs下文件名及菜单文本 ----
+                const docsMenu = [
+                        { file: 'intro.html', text: '项目简介' },
+                        { file: 'api.html', text: 'API接口' },
+                        { file: 'usage.html', text: '使用方法' },
+                        { file: 'architecture.html', text: '架构设计' }
+                ];
+                // ---- 菜单生成 ----
+                const menuDiv = document.getElementById('menu');
+                docsMenu.forEach((item, idx) => {
+                        const a = document.createElement('a');
+                        a.href = '#' + item.file;
+                        a.textContent = item.text;
+                        a.onclick = (e) => {
+                                e.preventDefault();
+                                loadDoc(item.file);
+                                setActive(idx);
+                                history.replaceState(null, '', '#' + item.file); // 改URL但不刷新
+                        };
+                        menuDiv.appendChild(a);
+                });
+                function setActive(idx) {
+                        [...menuDiv.children].forEach((el, i) => el.classList.toggle('active', i === idx));
+                }
+                // ---- 文档内容动态加载 ----
+                function loadDoc(file) {
+                        fetch('Docs/' + file)
+                                .then(r => r.ok ? r.text() : "<h2>404</h2>404: 文档不存在")
+                                .then(html => document.getElementById('content').innerHTML = html);
+                }
+                // ---- 支持URL直接#xxx.html加载 ----
+                function tryAutoLoad() {
+                        const hash = location.hash.slice(1);
+                        const idx = docsMenu.findIndex(item => item.file === hash);
+                        if (idx !== -1) {
+                                setActive(idx);
+                                loadDoc(hash);
+                        }
+                }
+                window.onload = tryAutoLoad;
+                window.onhashchange = tryAutoLoad;
+        </script>
+</body>
+</html>
