@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html>
 <head>
         <meta charset="UTF-8">
-        <title>ÎÄµµDemoÖ÷Ò³</title>
+        <title>Demo</title>
         <style>
                 body {
                         font-family: sans-serif;
@@ -31,18 +31,13 @@
         </style>
 </head>
 <body>
-        <h1>ÎÄµµÖ÷Ò³ Demo</h1>
+        <h1>Demo</h1>
         <div id="menu"></div>
-        <div id="content"><em>ÇëÑ¡Ôñ×ó²à²Ëµ¥²é¿´ÎÄµµÄÚÈÝ¡£</em></div>
+        <div id="content"><em>Demo</em></div>
         <script>
-                // ---- ÊÖ¶¯ÅäÖÃdocsÏÂÎÄ¼þÃû¼°²Ëµ¥ÎÄ±¾ ----
                 const docsMenu = [
-                        { file: 'intro.html', text: 'ÏîÄ¿¼ò½é' },
-                        { file: 'api.html', text: 'API½Ó¿Ú' },
-                        { file: 'usage.html', text: 'Ê¹ÓÃ·½·¨' },
-                        { file: 'architecture.html', text: '¼Ü¹¹Éè¼Æ' }
+                        { file: 'intro.html', text: 'intro' }
                 ];
-                // ---- ²Ëµ¥Éú³É ----
                 const menuDiv = document.getElementById('menu');
                 docsMenu.forEach((item, idx) => {
                         const a = document.createElement('a');
@@ -52,20 +47,18 @@
                                 e.preventDefault();
                                 loadDoc(item.file);
                                 setActive(idx);
-                                history.replaceState(null, '', '#' + item.file); // ¸ÄURLµ«²»Ë¢ÐÂ
+                                history.replaceState(null, '', '#' + item.file);
                         };
                         menuDiv.appendChild(a);
                 });
                 function setActive(idx) {
                         [...menuDiv.children].forEach((el, i) => el.classList.toggle('active', i === idx));
                 }
-                // ---- ÎÄµµÄÚÈÝ¶¯Ì¬¼ÓÔØ ----
                 function loadDoc(file) {
                         fetch('Docs/' + file)
-                                .then(r => r.ok ? r.text() : "<h2>404</h2>404: ÎÄµµ²»´æÔÚ")
+                                .then(r => r.ok ? r.text() : "<h2>404</h2>404: Not Found")
                                 .then(html => document.getElementById('content').innerHTML = html);
                 }
-                // ---- Ö§³ÖURLÖ±½Ó#xxx.html¼ÓÔØ ----
                 function tryAutoLoad() {
                         const hash = location.hash.slice(1);
                         const idx = docsMenu.findIndex(item => item.file === hash);

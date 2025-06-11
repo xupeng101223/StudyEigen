@@ -90,7 +90,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="index.html" />
-    <None Include="intro.html">
+    <None Include="Docs\intro.html">
       <Filter>Docs</Filter>
     </None>
   </ItemGroup>
