@@ -1,7 +1,119 @@
-��ʽ���Ʊ������ṹ�塢�ࡢ����ȵ��ڴ���뷽ʽ
+﻿<h2> 宏内容 </h2>
+#define EIGEN_ALIGN_TO_BOUNDARY(n) alignas(n)
 
+<h2>具体功能</h2>
+显式控制变量、结构体、类、数组等的内存对齐方式。</p>
+<pre><code>
 alignas(64) int arr[4];
-����ζ�� arr ���׵�ַ�ᱻ��֤�� 64 �ֽڶ��롣����Ӧ���� SIMD���� AVX-512���ڴ�����Ż���
+</code>
+这意味着 arr 的首地址会被保证是 64 字节对齐。典型应用于 SIMD（如 AVX-512）内存对齐优化。
+</pre>
 
-C++��׼��ȷ�涨��alignas(0) ��Ч���ǡ�δָ����unspecified��������ͨ�����ȼ���û��ָ�����룬Ҳ����ʹ�ø�����/������Ĭ�϶��뷽ʽ��
-���ͱ��������� GCC��Clang��MSVC������ alignas(0) �����������������κζ���Ķ���Ҫ���൱��û��д���롣
+<h3>需要注意</h3>
+C++标准明确规定，alignas(0) 的效果是“未指定（unspecified）”，但通常它等价于没有指定对齐，也就是使用该类型/变量的默认对齐方式。
+典型编译器（如 GCC、Clang、MSVC）遇到 alignas(0) 会无视它，不产生任何额外的对齐要求，相当于没有写对齐。
+
+<h2>测试例子与分析</h2>
+<pre><code>
+#include <iostream>
+#include <cstdint>
+#include <type_traits>
+
+// 明确对齐到64字节
+alignas(64) int arr1[4];
+
+// 默认对齐
+int arr2[4];
+
+struct alignas(32) S {
+        char a[7];
+        int b;
+};
+
+struct U {
+        alignas(16) char a;
+        char b;
+};
+
+struct U2 {
+        char a;
+        alignas(16) char b;
+};
+
+TEST(Test_EIGEN_ALIGN_TO_BOUNDARY, Test0)
+{
+        // 地址打印测试
+        std::cout << "arr1: " << std::uintptr_t(&arr1) << "  aligned 64 ? " << ((uintptr_t(&arr1) % 64) == 0) << '\n';
+        std::cout << "arr2: " << std::uintptr_t(&arr2) << "  aligned 4 ? " << ((uintptr_t(&arr2) % 4) == 0) << '\n';
+
+        S s;
+        std::cout << "S:    " << std::uintptr_t(&s) << "  aligned 32 ? " << ((uintptr_t(&s) % 32) == 0) << '\n';
+        std::cout << "S.a:    " << std::uintptr_t(&s.a) << "  aligned 32 ? " << ((uintptr_t(&s.a) % 32) == 0) << '\n';
+        std::cout << "S.b:    " << std::uintptr_t(&s.b) << "  aligned 32 ? " << ((uintptr_t(&s.b) % 32) == 0) << '\n';
+        std::cout << "S.b:    " << std::uintptr_t(&s.b) << "  aligned 4 ? " << ((uintptr_t(&s.b) % 4) == 0) << '\n';
+
+        U u;
+        std::cout << "U:    " << std::uintptr_t(&u) << "  aligned 16 ? " << ((uintptr_t(&u) % 16) == 0) << '\n';
+        std::cout << "U.a:    " << std::uintptr_t(&u.a) << "  aligned 16 ? " << ((uintptr_t(&u.a) % 16) == 0) << '\n';
+        std::cout << "U.b:    " << std::uintptr_t(&u.b) << "  aligned 16 ? " << ((uintptr_t(&u.b) % 16) == 0) << '\n';
+
+        U2 u2;
+        std::cout << "U2:    " << std::uintptr_t(&u2) << "  aligned 16 ? " << ((uintptr_t(&u2) % 16) == 0) << '\n';
+        std::cout << "U2.a:    " << std::uintptr_t(&u2.a) << "  aligned 16 ? " << ((uintptr_t(&u2.a) % 16) == 0) << '\n';
+        std::cout << "U2.b:    " << std::uintptr_t(&u2.b) << "  aligned 16 ? " << ((uintptr_t(&u2.b) % 16) == 0) << '\n';
+
+        std::cout << "alignof(int)=" << alignof(int) << '\n';
+        std::cout << "alignof(char)=" << alignof(char) << '\n';
+        std::cout << "alignof(arr1)=" << alignof(decltype(arr1)) << '\n';
+        std::cout << "alignof(S)=" << alignof(S) << '\n';
+        std::cout << "alignof(U)=" << alignof(U) << '\n';
+}
+    </code>
+测试结果：
+arr1:   140695616868416  aligned 64 ? 1
+arr2:   140695616868432  aligned 4 ? 1
+S:      559756079488     aligned 32 ? 1
+S.a:    559756079488     aligned 32 ? 1
+S.b:    559756079496     aligned 32 ? 0
+S.b:    559756079496     aligned 4 ? 1
+U:      559756079552     aligned 16 ? 1
+U.a:    559756079552     aligned 16 ? 1
+U.b:    559756079553     aligned 16 ? 0
+U2:     559756079600     aligned 16 ? 1
+U2.a:   559756079600     aligned 16 ? 1
+U2.b:   559756079616     aligned 16 ? 1
+alignof(int)=   4
+alignof(char)=  1
+alignof(arr1)=  4
+alignof(S)=     32
+alignof(U)=     16
+
+测试平台：
+visual studio 2022 (v143) C++14 Msvc Windows X64
+
+<li>可以看到arr1的对齐确实生效了。</li>
+<li>alignof(arr1) = 4，这个是系统对于类型的默认对齐要求，arr1的类型是int[4]，
+    系统认为数组的对齐与其成员的对齐要求相同，也即是等于int的对齐要求。
+    在我的电脑上，int的对齐要求默认为4字节对齐。
+    【注意：alignas的对齐要求需要大于系统默认对齐，否则编译会报错的。】</li>
+<li>arr2的分析可以参考arr1，其的对齐要求采用系统默认的对齐要求，也即是4字节对齐的int类型对齐要求。</li>
+<li>S的结构测试结果分析：由于其首成员的地址和结构体的地址相同，因此其首位成员的对齐要求和结构体保持一致，
+    其他成员无此要求</li>
+<li>U的结构测试结果分析：C++语言中定义，结构体（或类）的对齐要求，是其所有非静态成员对齐要求中的最大值。
+    因此可以看到，无论是第几个成员设置了高字节对齐要求，结构体都会采用其中最大的对齐要求。
+    另外参考S结构测试结果，首成员的对齐要求与结构体对齐要求一致。
+</li>
+    </pre>
+
+
+<h2>伪对齐</h2>
+<pre>
+    可以用下面的结构举例：
+    <code>
+struct alignas(32) S {
+        char a[7];
+        int b;
+};
+</code>
+a符合32字节对齐要求，但是b依旧延用系统默认对齐要求，也即是4字节对齐要求，称呼此现象为伪对齐。
+</pre>

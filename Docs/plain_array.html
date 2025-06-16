@@ -1,75 +1,31 @@
-这个结构**plain_array**，是Eigen核心内部内存管理系统中的一个重要组成部分。
-它的作用是为静态（编译期已知）大小的矩阵/数组元素，分配**对齐**的存储空间，并在编译期强制各种对齐和大小检查，
+<h2> 模板展开以及计算逻辑 </h2>
+plain_array 调用方式为:</p>
+<pre><code>
+template < typename T, int Size, int MatrixOrArrayOptions,int Alignment（默认参数可不设置） >
+struct plain_array
+</code></pre>
+
+<li>默认模板参数会计算Alignment
+</li>
+<li>查看Option中是否指定要求不对齐，否则会通过<a href="compute_default_alignment.html">compute_default_alignment</a>计算Alignment
+</li>
+<li>模板会根据Alignment的值，来选择特化版本或者通用版本。
+</li>
+<li>最后根据对齐需求，分配符合要求的栈上存储空间。
+</li>
+
+<h2> 结构作用 </h2>
+plain_array，是Eigen核心内部内存管理系统中的一个重要组成部分。
+它的作用是为静态（编译期已知）大小的矩阵/数组元素，分配对齐的栈存储空间，并在编译期强制各种对齐和大小检查，
 使得Eigen的数据结构在栈上或对象内部分配时，能够完全满足现代CPU SIMD指令优化需求。
 
-下面进行详细的源码架构和底层原理分析：
+<h2> 对齐的作用</h2>
+不同SIMD指令集（如SSE/AVX等）要求数据按8/16/32/64字节等对齐，才能高效、正确地加载进寄存器。
 
----
-
-## 一、plain_array 的本质作用
-
-1. **对齐内存分配（Alignment）**
-   - 不同SIMD指令集（如SSE/AVX等）要求数据按8/16/32/64字节等对齐，才能高效、正确地加载进寄存器。plain_array通过模板参数与特化机制，实现了不同对齐粒度的栈分配。
-   - 例如 `EIGEN_ALIGN_TO_BOUNDARY(16)` 等宏实际上会生成合适的编译期alignment属性，确保array缓冲区在内存上的地址为16字节对齐。
-
-2. **静态分配**
-   - 适用于尺寸在编译期已知的小矩阵，它避免了堆malloc/new，做到零堆分配、对象inline内联存储，极大提升了局部性与性能。
-
-3. **编译期分支与对齐断言**
-   - 通过静态模板参数和特化（16/32/64等），以及`EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT`运行时断言，避免伪对齐问题。
-   - GNU GCC等特定编译器下做了特殊hack，防止编译器过度优化导致断言失效（见eigen_unaligned_array_assert_workaround_gcc47）。
-
-         伪对齐问题和静态/动态断言
-        背景：SIMD指令需要高对齐。例如SSE需要16字节，AVX需要32字节。
-
-        如果内存不是按要求对齐（比如只对齐到4或8字节），即使C++语法允许声明alignas(16) float x[4];，编译器或运行时未必保证你申请到的地址总是对齐的，尤其在复杂结构体、数组的成员中，这被称为"伪对齐"。
-        比如你定义了struct Foo { EIGEN_ALIGN_TO_BOUNDARY(16) float arr[4];}，但如果 Foo 本身没对齐到16字节，那么arr也无法保证16字节对齐，这就是典型的“伪对齐”。
-        为此，Eigen分两步防护：
-
-        编译期间指定对齐（通过alignas/EIGEN_ALIGN_TO_BOUNDARY等）
-        运行时断言实际地址是否真的对齐，比如：
-        eigen_assert((reinterpret_cast<size_t>
-                (array) & (sizemask)) == 0 && "un-aligned array...");
-                这样即便编译器"承诺"对齐，运行时依然二次检查，避免碰到奇怪的ABI或编译器Bug导致的未对齐崩溃。
-
-
-        4. **辅助类型**
-        - 这种plain_array类型并不直接暴露给用户，而是作为DenseStorage等高阶存储结构的私有成员，负责实际的数据buffer存储。
-
-        ---
-
-        ## 二、各模板特化/分支详解
-
-        1. **plain_array<T, Size, Options, Alignment=X>
-                **
-                - X为8/16/32/64时，分配对应字节对齐数组。EIGEN_ALIGN_TO_BOUNDARY(X)可展平成C++11 alignas(X)。
-                - 构造函数执行静态断言，防止溢出或未对齐。
-                - `Alignment`的值由 `compute_default_alignment<T, Size>
-                        ::value` 计算得出（实际和类型大小、CPU、用户指定参数等有关）。
-
-                        2. **plain_array<T, 0, Options, Alignment>
-                                **
-                                - 特化用于0元素数组，防止C++非法T[0]（用T[1]防止GCC等编译器警告），但不会被实际访问。
-
-                                ---
-
-                                ## 三、与Eigen主脉络的关系
-
-                                - **DenseStorage**（Matrix、Array等的数据成员）根据存储规模是否静态、是否需要对齐，选择不同plain_array模板实例作为其内联成员buffer。
-                                - **PlainObjectBase/MatrixBase/ArrayBase**向上封装plain_array，提供线性代数操作接口。
-                                - **Map**等零拷贝表达式用不到plain_array，因为它们只是映射外部缓冲区，无需实际内存持有。
-
-                                ---
-
-                                ## 四、与硬件/CPU的深层关系
-
-                                - 对齐存储是高性能计算的基石。若未对齐，SIMD load/store可能降速甚至crash。
-                                - GCC/Clang/MSVC等编译器的对齐语义在实现细节和bug（如GCC 4.7及opt bug）上各异，Eigen做了大量兼容和静态/动态检查。
-                                - 编译期静态分配，提高cache locality、指令并行性，减少TLB消耗。
-
-                                ---
-
-                                ## 五、总结本质
-
-                                **plain_array 是Eigen底层inline静态对齐存储buffer的类型。它保证小型矩阵/数组的每一元素满足SIMD指令要求的对齐需求，且在构造时断言合法性。
-                                这直接决定了Eigen整体的性能、移植性和健壮性，是"数据为王"范式与现代CPU结合的典范实现。**
+<h2> 使用的各个组件 </h2>
+<li><a href="compute_default_alignment.html">compute_default_alignment</a> 用来自动化计算对齐位数
+</li>
+<li><a href="EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.html">EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT</a> 避免伪对齐造成的影响
+</li>
+<li><a href="EIGEN_ALIGN_TO_BOUNDARY.html">EIGEN_ALIGN_TO_BOUNDARY</a> 对齐设置
+</li>

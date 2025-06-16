@@ -78,17 +78,15 @@ namespace Eigen
         // dynamic-size matrix with fixed-size storage
         template<typename T, int Size, int _Options> class DenseStorage<T, Size, Dynamic, Dynamic, _Options>
         {
-                internal::plain_array<T, Size, _Options> m_data;
+                plain_array<T, Size, _Options> m_data;
                 Index m_rows;
                 Index m_cols;
         public:
-                EIGEN_DEVICE_FUNC DenseStorage() : m_rows(0), m_cols(0) {}
-                EIGEN_DEVICE_FUNC explicit DenseStorage(internal::constructor_without_unaligned_array_assert)
-                        : m_data(internal::constructor_without_unaligned_array_assert()), m_rows(0), m_cols(0) {}
-                EIGEN_DEVICE_FUNC DenseStorage(const DenseStorage& other)
-                        : m_data(internal::constructor_without_unaligned_array_assert()), m_rows(other.m_rows), m_cols(other.m_cols)
+                DenseStorage() : m_rows(0), m_cols(0) {}
+                DenseStorage(const DenseStorage& other)
+                        : m_rows(other.m_rows), m_cols(other.m_cols)
                 {
-                        internal::plain_array_helper::copy(other.m_data, m_rows * m_cols, m_data);
+                        plain_array_helper::copy(other.m_data, m_rows * m_cols, m_data);
                 }
                 EIGEN_DEVICE_FUNC DenseStorage& operator=(const DenseStorage& other)
                 {

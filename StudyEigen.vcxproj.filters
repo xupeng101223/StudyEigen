@@ -29,6 +29,13 @@
     <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Test_plain_array.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Test_EIGEN_ALIGN_TO_BOUNDARY.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="plain_array_helper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -80,7 +87,7 @@
     <ClInclude Include="LrfHasCols.h" />
     <ClInclude Include="LrfHasRows.h" />
     <ClInclude Include="LrfHasEvalTo.h" />
-    <ClInclude Include="LRF_STRONG_INLINE.h" />
+    <ClInclude Include="EIGEN_STRONG_INLINE.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="packet_traits.h" />
     <ClInclude Include="SupportAvx512.h" />
@@ -96,8 +103,8 @@
     <ClInclude Include="eigen_plain_assert.h" />
     <ClInclude Include="UIntPtr.h" />
     <ClInclude Include="EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h" />
-    <ClInclude Include="Docs\EIGEN_CONSTEXPR.h" />
-    <ClInclude Include="Docs\EIGEN_NOEXCEPT.h" />
+    <ClInclude Include="smart_copy.h" />
+    <ClInclude Include="GenericNumTraits.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

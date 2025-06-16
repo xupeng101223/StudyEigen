@@ -116,8 +116,6 @@
     <ClInclude Include="DenseCoeffsBase.h" />
     <ClInclude Include="DenseStorage.h" />
     <ClInclude Include="DirectAccessBit.h" />
-    <ClInclude Include="Docs\EIGEN_CONSTEXPR.h" />
-    <ClInclude Include="Docs\EIGEN_NOEXCEPT.h" />
     <ClInclude Include="Dynamic.h" />
     <ClInclude Include="EigenBase.h" />
     <ClInclude Include="EIGEN_ALIGN_TO_BOUNDARY.h" />
@@ -140,6 +138,7 @@
     <ClInclude Include="evaluator_traits_base.h" />
     <ClInclude Include="find_best_packet.h" />
     <ClInclude Include="find_best_packet_helper.h" />
+    <ClInclude Include="GenericNumTraits.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="is_arithmetic.h" />
     <ClInclude Include="is_same.h" />
@@ -150,7 +149,7 @@
     <ClInclude Include="LrfHasEvalTo.h" />
     <ClInclude Include="LRF_AVX.h" />
     <ClInclude Include="LRF_SSE.h" />
-    <ClInclude Include="LRF_STRONG_INLINE.h" />
+    <ClInclude Include="EIGEN_STRONG_INLINE.h" />
     <ClInclude Include="LvalueBit.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixXpr.h" />
@@ -164,6 +163,7 @@
     <ClInclude Include="plain_array.h" />
     <ClInclude Include="RowMajorBit.h" />
     <ClInclude Include="size_at_compile_time.h" />
+    <ClInclude Include="smart_copy.h" />
     <ClInclude Include="StorageOptions.h" />
     <ClInclude Include="SupportAvx512.h" />
     <ClInclude Include="traits.h" />
@@ -178,14 +178,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="plain_array_helper.h" />
     <ClCompile Include="Test\TestDenseCoeffsBase.cpp" />
     <ClCompile Include="Test\TestEigenBase.cpp" />
     <ClCompile Include="Test\TestSupportAvx512.cpp" />
     <ClCompile Include="Test\Test_compute_default_alignment.cpp" />
     <ClCompile Include="Test\Test_compute_matrix_flags.cpp" />
+    <ClCompile Include="Test\Test_EIGEN_ALIGN_TO_BOUNDARY.cpp" />
     <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp" />
     <ClCompile Include="Test\Test_find_best_packet.cpp" />
     <ClCompile Include="Test\Test_packet_traits.cpp" />
+    <ClCompile Include="Test\Test_plain_array.cpp" />
     <ClCompile Include="Test\Test_traits.cpp" />
   </ItemGroup>
   <ItemGroup>

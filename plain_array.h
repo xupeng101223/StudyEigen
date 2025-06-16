@@ -7,6 +7,7 @@
 template <typename T, int Size, int MatrixOrArrayOptions, int Alignment = (MatrixOrArrayOptions & DontAlign) ? 0 : compute_default_alignment<T, Size>::value>
 struct plain_array
 {
+        //static_assert(false, "DontAlign");
         T array[Size];
         plain_array() {}
 };
@@ -14,6 +15,7 @@ struct plain_array
 template <typename T, int Size, int MatrixOrArrayOptions>
 struct plain_array<T, Size, MatrixOrArrayOptions, 8>
 {
+        //static_assert(false, "8");
         EIGEN_ALIGN_TO_BOUNDARY(8) T array[Size];
         plain_array() 
         {
@@ -24,6 +26,7 @@ struct plain_array<T, Size, MatrixOrArrayOptions, 8>
 template <typename T, int Size, int MatrixOrArrayOptions>
 struct plain_array<T, Size, MatrixOrArrayOptions, 16>
 {
+        //static_assert(false, "16");
         EIGEN_ALIGN_TO_BOUNDARY(16) T array[Size];
         plain_array()
         {
@@ -34,8 +37,8 @@ struct plain_array<T, Size, MatrixOrArrayOptions, 16>
 template <typename T, int Size, int MatrixOrArrayOptions>
 struct plain_array<T, Size, MatrixOrArrayOptions, 32>
 {
+        //static_assert(false, "32");
         EIGEN_ALIGN_TO_BOUNDARY(32) T array[Size];
-
         plain_array()
         {
                 EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT(31);
@@ -45,8 +48,8 @@ struct plain_array<T, Size, MatrixOrArrayOptions, 32>
 template <typename T, int Size, int MatrixOrArrayOptions>
 struct plain_array<T, Size, MatrixOrArrayOptions, 64>
 {
+        //static_assert(false, "64");
         EIGEN_ALIGN_TO_BOUNDARY(64) T array[Size];
-
         plain_array()
         {
                 EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT(63);
@@ -56,6 +59,7 @@ struct plain_array<T, Size, MatrixOrArrayOptions, 64>
 template <typename T, int MatrixOrArrayOptions, int Alignment>
 struct plain_array<T, 0, MatrixOrArrayOptions, Alignment>
 {
+        //static_assert(false, "0");
         T array[1];
         plain_array() {}
 };
