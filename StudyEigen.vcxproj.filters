@@ -26,6 +26,9 @@
     <ClCompile Include="Test\TestSupportAvx512.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -86,11 +89,41 @@
     <ClInclude Include="evaluator_traits.h" />
     <ClInclude Include="evaluator_traits_base.h" />
     <ClInclude Include="DenseStorage.h" />
+    <ClInclude Include="plain_array.h" />
+    <ClInclude Include="EIGEN_ALIGN_TO_BOUNDARY.h" />
+    <ClInclude Include="EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.h" />
+    <ClInclude Include="eigen_assert.h" />
+    <ClInclude Include="eigen_plain_assert.h" />
+    <ClInclude Include="UIntPtr.h" />
+    <ClInclude Include="EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h" />
+    <ClInclude Include="Docs\EIGEN_CONSTEXPR.h" />
+    <ClInclude Include="Docs\EIGEN_NOEXCEPT.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="index.html" />
-    <None Include="Docs\intro.html">
+    <None Include="Docs\介绍.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\DenseStorage.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\内存块.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\plain_array.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\compute_default_alignment.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\EIGEN_ALIGN_TO_BOUNDARY.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.html">
       <Filter>Docs</Filter>
     </None>
   </ItemGroup>

@@ -1,100 +1,68 @@
 #pragma once
+#include "plain_array.h"
+#include "EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h"
+#include "Index.h"
+#include "eigen_assert.h"
+#include "EIGEN_CONSTEXPR.h"
+#include "EIGEN_NOEXCEPT.h"
+#include <utility>
+
 namespace Eigen
 {
-        /** \internal
-  *
-  * \class DenseStorage
-  * \ingroup Core_Module
-  *
-  * \brief Stores the data of a matrix
-  *
-  * This class stores the data of fixed-size, dynamic-size or mixed matrices
-  * in a way as compact as possible.
-  *
-  * \sa Matrix
-  */
-        template<typename T, int Size, int _Rows, int _Cols, int _Options> class DenseStorage;
+        template<typename T, int Size, int _Rows, int _Cols, int _Options>
+        class DenseStorage;
 
-        // purely fixed-size matrix
-        template<typename T, int Size, int _Rows, int _Cols, int _Options> class DenseStorage
+        template<typename T, int Size, int _Rows, int _Cols, int _Options>
+        class DenseStorage
         {
-                internal::plain_array<T, Size, _Options> m_data;
+                plain_array<T, Size, _Options> m_data;
         public:
-                EIGEN_DEVICE_FUNC DenseStorage() {
+                DenseStorage() 
+                {
                         EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN(Index size = Size)
                 }
-                EIGEN_DEVICE_FUNC
-                        explicit DenseStorage(internal::constructor_without_unaligned_array_assert)
-                        : m_data(internal::constructor_without_unaligned_array_assert()) {}
-#if !EIGEN_HAS_CXX11 || defined(EIGEN_DENSE_STORAGE_CTOR_PLUGIN)
-                EIGEN_DEVICE_FUNC
-                        DenseStorage(const DenseStorage& other) : m_data(other.m_data) {
-                        EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN(Index size = Size)
-                }
-#else
-                EIGEN_DEVICE_FUNC DenseStorage(const DenseStorage&) = default;
-#endif
-#if !EIGEN_HAS_CXX11
-                EIGEN_DEVICE_FUNC
-                        DenseStorage& operator=(const DenseStorage& other)
+                DenseStorage(const DenseStorage&) = default;
+                DenseStorage(DenseStorage&&) = default;
+                DenseStorage& operator=(const DenseStorage&) = default;
+                DenseStorage& operator=(DenseStorage&&) = default;
+
+
+                DenseStorage(Index size, Index rows, Index cols) 
                 {
-                        if (this != &other) m_data = other.m_data;
-                        return *this;
-                }
-#else
-                EIGEN_DEVICE_FUNC DenseStorage& operator=(const DenseStorage&) = default;
-#endif
-#if EIGEN_HAS_RVALUE_REFERENCES
-#if !EIGEN_HAS_CXX11
-                EIGEN_DEVICE_FUNC DenseStorage(DenseStorage&& other) EIGEN_NOEXCEPT
-                        : m_data(std::move(other.m_data))
-                {
-                }
-                EIGEN_DEVICE_FUNC DenseStorage& operator=(DenseStorage&& other) EIGEN_NOEXCEPT
-                {
-                        if (this != &other)
-                                m_data = std::move(other.m_data);
-                        return *this;
-                }
-#else
-                EIGEN_DEVICE_FUNC DenseStorage(DenseStorage&&) = default;
-                EIGEN_DEVICE_FUNC DenseStorage& operator=(DenseStorage&&) = default;
-#endif
-#endif
-                EIGEN_DEVICE_FUNC DenseStorage(Index size, Index rows, Index cols) {
                         EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN({})
-                                eigen_internal_assert(size == rows * cols && rows == _Rows && cols == _Cols);
-                        EIGEN_UNUSED_VARIABLE(size);
-                        EIGEN_UNUSED_VARIABLE(rows);
-                        EIGEN_UNUSED_VARIABLE(cols);
+                        eigen_assert(size == rows * cols && rows == _Rows && cols == _Cols);
                 }
-                EIGEN_DEVICE_FUNC void swap(DenseStorage& other) {
-                        numext::swap(m_data, other.m_data);
+
+                void swap(DenseStorage& other)
+                {
+                        std::swap(m_data, other.m_data);
                 }
-                EIGEN_DEVICE_FUNC static EIGEN_CONSTEXPR Index rows(void) EIGEN_NOEXCEPT { return _Rows; }
-                EIGEN_DEVICE_FUNC static EIGEN_CONSTEXPR Index cols(void) EIGEN_NOEXCEPT { return _Cols; }
-                EIGEN_DEVICE_FUNC void conservativeResize(Index, Index, Index) {}
-                EIGEN_DEVICE_FUNC void resize(Index, Index, Index) {}
-                EIGEN_DEVICE_FUNC const T* data() const { return m_data.array; }
-                EIGEN_DEVICE_FUNC T* data() { return m_data.array; }
+
+                static EIGEN_CONSTEXPR Index rows(void) EIGEN_NOEXCEPT { return _Rows; }
+                static EIGEN_CONSTEXPR Index cols(void) EIGEN_NOEXCEPT { return _Cols; }
+                void conservativeResize(Index, Index, Index) {}
+                void resize(Index, Index, Index) {}
+                const T* data() const { return m_data.array; }
+                T* data() { return m_data.array; }
         };
 
         // null matrix
-        template<typename T, int _Rows, int _Cols, int _Options> class DenseStorage<T, 0, _Rows, _Cols, _Options>
+        template<typename T, int _Rows, int _Cols, int _Options>
+        class DenseStorage<T, 0, _Rows, _Cols, _Options>
         {
         public:
-                EIGEN_DEVICE_FUNC DenseStorage() {}
-                EIGEN_DEVICE_FUNC explicit DenseStorage(internal::constructor_without_unaligned_array_assert) {}
-                EIGEN_DEVICE_FUNC DenseStorage(const DenseStorage&) {}
-                EIGEN_DEVICE_FUNC DenseStorage& operator=(const DenseStorage&) { return *this; }
-                EIGEN_DEVICE_FUNC DenseStorage(Index, Index, Index) {}
-                EIGEN_DEVICE_FUNC void swap(DenseStorage&) {}
-                EIGEN_DEVICE_FUNC static EIGEN_CONSTEXPR Index rows(void) EIGEN_NOEXCEPT { return _Rows; }
-                EIGEN_DEVICE_FUNC static EIGEN_CONSTEXPR Index cols(void) EIGEN_NOEXCEPT { return _Cols; }
-                EIGEN_DEVICE_FUNC void conservativeResize(Index, Index, Index) {}
-                EIGEN_DEVICE_FUNC void resize(Index, Index, Index) {}
-                EIGEN_DEVICE_FUNC const T* data() const { return 0; }
-                EIGEN_DEVICE_FUNC T* data() { return 0; }
+                DenseStorage() {}
+                explicit DenseStorage(internal::constructor_without_unaligned_array_assert) {}
+                DenseStorage(const DenseStorage&) {}
+                DenseStorage& operator=(const DenseStorage&) { return *this; }
+                DenseStorage(Index, Index, Index) {}
+                void swap(DenseStorage&) {}
+                static EIGEN_CONSTEXPR Index rows(void) EIGEN_NOEXCEPT { return _Rows; }
+                static EIGEN_CONSTEXPR Index cols(void) EIGEN_NOEXCEPT { return _Cols; }
+                void conservativeResize(Index, Index, Index) {}
+                void resize(Index, Index, Index) {}
+                const T* data() const { return 0; }
+                T* data() { return 0; }
         };
 
         // more specializations for null matrices; these are necessary to resolve ambiguities

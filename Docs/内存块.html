@@ -1,0 +1,8 @@
+Eigen::PlainObjectBase
+作用：这是Matrix和Array等对象的基类，负责实际的数据存储与生命周期管理。绝大多数存储相关的操作都出自这个模板基类。
+
+Eigen::DenseStorage
+作用：专门负责元素的原始存储与内存调整，是PlainObjectBase的数据成员。DenseStorage模板负责确定元素是栈上分配还是堆上分配，包括静态大小和动态大小的判断与处理。
+
+Eigen::Map
+作用：并不分配和管理内存，而是将已有缓冲区映射为Eigen对象，属于零开销抽象，常用于外部内存块的封装。

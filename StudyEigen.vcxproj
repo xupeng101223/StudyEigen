@@ -32,6 +32,12 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>E:\StudyEigen;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>E:\StudyEigen;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,17 +116,24 @@
     <ClInclude Include="DenseCoeffsBase.h" />
     <ClInclude Include="DenseStorage.h" />
     <ClInclude Include="DirectAccessBit.h" />
+    <ClInclude Include="Docs\EIGEN_CONSTEXPR.h" />
+    <ClInclude Include="Docs\EIGEN_NOEXCEPT.h" />
     <ClInclude Include="Dynamic.h" />
     <ClInclude Include="EigenBase.h" />
+    <ClInclude Include="EIGEN_ALIGN_TO_BOUNDARY.h" />
+    <ClInclude Include="eigen_assert.h" />
     <ClInclude Include="EIGEN_CONSTEXPR.h" />
     <ClInclude Include="EIGEN_DEFAULT_DENSE_INDEX_TYPE.h" />
     <ClInclude Include="EIGEN_DEVICE_FUNC.h" />
     <ClInclude Include="EIGEN_FAST_MATH.h" />
+    <ClInclude Include="EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h" />
+    <ClInclude Include="EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.h" />
     <ClInclude Include="EIGEN_MAX_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_MAX_STATIC_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_MIN_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_NOEXCEPT.h" />
     <ClInclude Include="eigen_packet_wrapper.h" />
+    <ClInclude Include="eigen_plain_assert.h" />
     <ClInclude Include="EIGEN_UNALIGNED_VECTORIZE.h" />
     <ClInclude Include="evaluator.h" />
     <ClInclude Include="evaluator_traits.h" />
@@ -148,11 +161,13 @@
     <ClInclude Include="PacketAccessBit.h" />
     <ClInclude Include="packet_traits.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="plain_array.h" />
     <ClInclude Include="RowMajorBit.h" />
     <ClInclude Include="size_at_compile_time.h" />
     <ClInclude Include="StorageOptions.h" />
     <ClInclude Include="SupportAvx512.h" />
     <ClInclude Include="traits.h" />
+    <ClInclude Include="UIntPtr.h" />
     <ClInclude Include="unary_evaluator.h" />
     <ClInclude Include="unpacket_traits.h" />
   </ItemGroup>
@@ -168,12 +183,20 @@
     <ClCompile Include="Test\TestSupportAvx512.cpp" />
     <ClCompile Include="Test\Test_compute_default_alignment.cpp" />
     <ClCompile Include="Test\Test_compute_matrix_flags.cpp" />
+    <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp" />
     <ClCompile Include="Test\Test_find_best_packet.cpp" />
     <ClCompile Include="Test\Test_packet_traits.cpp" />
     <ClCompile Include="Test\Test_traits.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Docs\intro.html" />
+    <None Include="Docs\compute_default_alignment.html" />
+    <None Include="Docs\DenseStorage.html" />
+    <None Include="Docs\EIGEN_ALIGN_TO_BOUNDARY.html" />
+    <None Include="Docs\EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.html" />
+    <None Include="Docs\EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.html" />
+    <None Include="Docs\plain_array.html" />
+    <None Include="Docs\介绍.html" />
+    <None Include="Docs\内存块.html" />
     <None Include="index.html" />
     <None Include="packages.config" />
   </ItemGroup>

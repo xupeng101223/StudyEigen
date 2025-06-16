@@ -1,0 +1,2 @@
+#pragma once
+#define EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN(x) (x)
