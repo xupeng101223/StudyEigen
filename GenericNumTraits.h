@@ -5,6 +5,8 @@
 #include <limits>
 #include "is_arithmetic.h"
 #include "conditional.h"
+#include "default_digits10_impl.h"
+#include "default_digits_impl.h"
 
 template<typename T> 
 struct GenericNumTraits
@@ -25,61 +27,62 @@ struct GenericNumTraits
         typedef T Nested;
         typedef T Literal;
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE 
-                Real epsilon()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE Real 
+        epsilon()
         {
-                return numext::numeric_limits<T>::epsilon();
+                return std::numeric_limits<T>::epsilon();
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE 
-                int digits10()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE int 
+        digits10()
         {
-                return internal::default_digits10_impl<T>::run();
+                return default_digits10_impl<T>::run();
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE
-                int digits()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE int 
+        digits()
         {
-                return internal::default_digits_impl<T>::run();
+                return default_digits_impl<T>::run();
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE
-                int min_exponent()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE int 
+        min_exponent()
         {
-                return numext::numeric_limits<T>::min_exponent;
+                return std::numeric_limits<T>::min_exponent;
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE
-                int max_exponent()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE int
+        max_exponent()
         {
-                return numext::numeric_limits<T>::max_exponent;
+                return std::numeric_limits<T>::max_exponent;
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE
-                Real dummy_precision()
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE Real 
+        dummy_precision()
         {
-                // make sure to override this for floating-point types
                 return Real(0);
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR
-                static inline T highest() {
-                return (numext::numeric_limits<T>::max)();
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE T
+        highest() {
+                return (std::numeric_limits<T>::max)();
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR
-                static inline T lowest() {
-                return IsInteger ? (numext::numeric_limits<T>::min)()
-                        : static_cast<T>(-(numext::numeric_limits<T>::max)());
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE T
+        lowest() {
+                return IsInteger ? (std::numeric_limits<T>::min)()
+                        : static_cast<T>(-(std::numeric_limits<T>::max)());
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR
-                static inline T infinity() {
-                return numext::numeric_limits<T>::infinity();
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE T
+        infinity() 
+        {
+                return std::numeric_limits<T>::infinity();
         }
 
-        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR
-                static inline T quiet_NaN() {
-                return numext::numeric_limits<T>::quiet_NaN();
+        EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static EIGEN_STRONG_INLINE T
+        quiet_NaN() 
+        {
+                return std::numeric_limits<T>::quiet_NaN();
         }
 };

@@ -1,0 +1,19 @@
+enum float_denorm_style
+{
+    denorm_indeterminate = -1, // 是否支持非规格化数未定
+    denorm_absent        = 0,  // 不支持非规格化数，遇到极小的数字直接当作0处理
+    denorm_present       = 1   // 支持非规格化数，可保存更小的浮点数
+};
+
+denorm_present（支持）：
+处理器和浮点标准支持“非正规数”，也就是当浮点数绝对值比最小规格化正数还小时，依然采用逐步降低有效位的方法来保存更小的数字。
+比如 IEEE 754 标准浮点数支持这一点，可以避免 “Underflow to zero”（直接下溢成零）。
+
+denorm_absent（不支持）：
+不支持非正规数。当数值过小时，被直接当成0处理，损失了精度。
+
+denorm_indeterminate（未定）：
+体系未明确给出是否支持非正规数，有些自定义类型或架构可能遇到。
+
+可通过std::numeric_limits<float>::has_denorm 来计算这个数值
+测试结果中可知本机是支持 "非正规数"的。

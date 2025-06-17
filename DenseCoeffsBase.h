@@ -14,7 +14,7 @@ DenseCoeffsBase
 #include "conditional.h"
 #include "is_arithmetic.h"
 #include "add_const_on_value_type_if_arithmetic.h"
-#include "LRF_STRONG_INLINE.h"
+#include "EIGEN_STRONG_INLINE.h"
 
 namespace Eigen 
 {
@@ -63,7 +63,7 @@ namespace Eigen
                 using Base::size;
                 using Base::derived;
 
-                LRF_STRONG_INLINE Index rowIndexByOuterInner(Index outer, Index inner) const
+                EIGEN_STRONG_INLINE Index rowIndexByOuterInner(Index outer, Index inner) const
                 {
                         return int(Derived::RowsAtCompileTime) == 1 ? 0
                                 : int(Derived::ColsAtCompileTime) == 1 ? inner
@@ -71,7 +71,7 @@ namespace Eigen
                                 : inner;
                 }
 
-                LRF_STRONG_INLINE Index colIndexByOuterInner(Index outer, Index inner) const
+                EIGEN_STRONG_INLINE Index colIndexByOuterInner(Index outer, Index inner) const
                 {
                         return int(Derived::ColsAtCompileTime) == 1 ? 0
                                 : int(Derived::RowsAtCompileTime) == 1 ? inner

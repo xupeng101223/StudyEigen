@@ -1,0 +1,12 @@
+对比Eigen的原版代码，有一些修改，
+一个是他的一些信息是通过NumTraits来获取的，而我都统一改成了std::numeric_limits
+另一个是Real，std::numeric_limits认为其就是T，但是Eigen涉及到比如complex等时，Real != T
+但是这个我暂时没有展开，作为TODO项目吧。
+
+不不，还真不行，后面的分析可知，这部分如果是自定义标量类型的话，非标是需要自己写NumTraits的。
+所以是一定需要定义的，敲，这部分稍等我得一点点整理下。
+
+std::numeric_limits< T>::is_specialized，可以理解为标准标量类型。
+类似int,float等等。
+
+这是一个SFINAE机制

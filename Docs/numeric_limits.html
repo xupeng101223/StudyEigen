@@ -1,0 +1,108 @@
+#pragma once
+#include "float_denorm_style.h"
+#include "float_round_style.h"
+
+struct _Num_base
+{
+        static constexpr float_denorm_style has_denorm = denorm_absent;
+        static constexpr bool has_denorm_loss = false;
+        static constexpr bool has_infinity = false;
+        static constexpr bool has_quiet_NaN = false;
+        static constexpr bool has_signaling_NaN = false;
+        static constexpr bool is_bounded = false;
+        static constexpr bool is_exact = false;
+        static constexpr bool is_iec559 = false;
+        static constexpr bool is_integer = false;
+        static constexpr bool is_modulo = false;
+        static constexpr bool is_signed = false;
+        static constexpr bool is_specialized = false;
+        static constexpr bool tinyness_before = false;
+        static constexpr bool traps = false;
+        static constexpr float_round_style round_style = round_toward_zero;
+        static constexpr int digits = 0;
+        static constexpr int digits10 = 0;
+        static constexpr int max_digits10 = 0;
+        static constexpr int max_exponent = 0;
+        static constexpr int max_exponent10 = 0;
+        static constexpr int min_exponent = 0;
+        static constexpr int min_exponent10 = 0;
+        static constexpr int radix = 0;
+};
+
+
+std::numeric_limits<T>
+        数据成员（或说“浮点类型特性”）的一个仿制或基础实现，
+        常见于数值模板库、类型traits体系或库内部（比如libstdc++/libc++的实现细节）中。
+        它用于描述某种“数值类型”的所有基础数学属性和底层能力。
+
+        float_denorm_style has_denorm
+        描述： 该类型是否支持非规格化数（Subnormal/Denormal）。
+        举例： 硬件浮点数（比如float）如支持则通常是denorm_present；这里值是denorm_absent，表示完全不支持。
+        硬件实现： CPU的浮点单元/FPU是否能识别subnormal，对下溢和极小数精度有重大影响；有些向量化SIMD指令（为提升速度）直接flush-to-zero。
+        
+        bool has_denorm_loss
+        描述： 该类型的运算是否可能造成denorm转换导致信息丢失。
+        举例： 浮点型可为真，整型或不支持denorm的为假。影响下溢和低精度计算。
+        
+        bool has_infinity
+        描述： 是否能表示正无穷/负无穷。
+        举例： 按照IEEE 754标准的float/double有inf；而定点、整型是false。
+        
+        bool has_quiet_NaN
+        描述： 是否能表示“静默NaN”（Not a Number，且传播算子不会触发异常）。
+        影响： 数值运算健壮性，“坏数据”检测设计。
+        
+        bool has_signaling_NaN
+        描述： 是否能表示“信号NaN”（传播时会触发异常，可以被硬件trap）。
+        底层实现： 现代x86/ARM硬件通常支持。
+        
+        bool is_bounded
+        描述： 是否有最大/最小值界限。
+        举例： float/int都是true；自增长的BigInt无限大，则是false。
+        
+        bool is_exact
+        描述： 所有值是否都能精确表示（如整数），浮点数是近似所以为false。
+        影响： 算法设计时区分“定点/浮点”精度误差。
+        
+        bool is_iec559
+        描述： 是否符合IEEE 754（也叫IEC 559）标准（大部分float/double是true）。
+        硬件层实现： 决定了底层格式、舍入规则、异常语义等。
+        
+        bool is_integer
+        描述： 是否为整型。
+        算法影响： 不同分支，避免浮点比较。
+        
+        bool is_modulo
+        描述： 运算是否为“模运算封闭”，即溢出时返回(mod最大值)值（整型典型的行为，float不具备）。
+        底层意义： 用于安全溢出检测及裁剪。
+        
+        bool is_signed
+        描述： 能否表达负数。
+        
+        bool is_specialized
+        描述： 标准库或库特定类型是否有专门实现numeric_limits。用来辅助模板SFINAE与特化匹配。
+        
+        bool tinyness_before
+        描述： 是否在舍入前判定数值太小（tininess，overflow/underflow的判定机制，IEE754需求）。
+        底层含义： SSE/AVX硬件处理下溢的方式。
+        
+        bool traps
+        描述： 运算错误/异常是否会触发（trap）硬件错误。
+        比如： 除0是否会硬件抛异常。
+        
+        float_round_style round_style
+        描述： 当前类型的默认舍入风格（见上文详细解读）。
+        底层可控性： 部分平台可通过FPU寄存器控制。
+        
+        int digits/digits10/max_digits10
+        digits: 能精确表示的二进制有效位数
+        digits10: 能无信息丢失地表示的十进制有效数位
+        max_digits10: 保证转来转去字符串/浮点还能还原回原数的最小十进制位数
+       
+        int max_exponent/max_exponent10/min_exponent/min_exponent10
+        描述： 能表达的最大/最小阶码（二进制和十进制下）。
+        算法设计： 影响极值测试、动态量程、数值稳健性。
+        
+        int radix
+        描述： 该类型表示的基数，float/double通常为2（即二进制），有些BCD/十进制浮点是10，整数型同，降精度定点型也可以是2。
+        硬件关联： 浮点单元内部实现细节。

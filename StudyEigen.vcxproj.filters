@@ -26,7 +26,7 @@
     <ClCompile Include="Test\TestSupportAvx512.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp">
+    <ClCompile Include="Test\Test_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp">
       <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="Test\Test_plain_array.cpp">
@@ -35,7 +35,18 @@
     <ClCompile Include="Test\Test_EIGEN_ALIGN_TO_BOUNDARY.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="plain_array_helper.h" />
+    <ClCompile Include="Test\Test_float_denorm_style.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Test_float_round_style.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\TestNumTraits.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Test_default_digits10_impl.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -105,6 +116,9 @@
     <ClInclude Include="EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h" />
     <ClInclude Include="smart_copy.h" />
     <ClInclude Include="GenericNumTraits.h" />
+    <ClInclude Include="default_digits10_impl.h" />
+    <ClInclude Include="NumTraits.h" />
+    <ClInclude Include="default_digits_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -131,6 +145,21 @@
       <Filter>Docs</Filter>
     </None>
     <None Include="Docs\EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\float_denorm_style.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\float_round_style.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\numeric_limits.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Test\default_digits10_impl.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\NumTraits.html">
       <Filter>Docs</Filter>
     </None>
   </ItemGroup>

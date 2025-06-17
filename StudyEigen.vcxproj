@@ -111,6 +111,8 @@
     <ClInclude Include="compute_default_alignment_helper.h" />
     <ClInclude Include="compute_matrix_flags.h" />
     <ClInclude Include="conditional.h" />
+    <ClInclude Include="default_digits10_impl.h" />
+    <ClInclude Include="default_digits_impl.h" />
     <ClInclude Include="default_packet_traits.h" />
     <ClInclude Include="Dense.h" />
     <ClInclude Include="DenseCoeffsBase.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixXpr.h" />
     <ClInclude Include="NestByRefBit.h" />
+    <ClInclude Include="NumTraits.h" />
     <ClInclude Include="Packet4f.h" />
     <ClInclude Include="Packet4i.h" />
     <ClInclude Include="Packet8f.h" />
@@ -178,18 +181,21 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="plain_array_helper.h" />
     <ClCompile Include="Test\TestDenseCoeffsBase.cpp" />
     <ClCompile Include="Test\TestEigenBase.cpp" />
+    <ClCompile Include="Test\TestNumTraits.cpp" />
     <ClCompile Include="Test\TestSupportAvx512.cpp" />
     <ClCompile Include="Test\Test_compute_default_alignment.cpp" />
     <ClCompile Include="Test\Test_compute_matrix_flags.cpp" />
+    <ClCompile Include="Test\Test_default_digits10_impl.cpp" />
     <ClCompile Include="Test\Test_EIGEN_ALIGN_TO_BOUNDARY.cpp" />
-    <ClCompile Include="Test\TEST_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp" />
+    <ClCompile Include="Test\Test_EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.cpp" />
     <ClCompile Include="Test\Test_find_best_packet.cpp" />
+    <ClCompile Include="Test\Test_float_round_style.cpp" />
     <ClCompile Include="Test\Test_packet_traits.cpp" />
     <ClCompile Include="Test\Test_plain_array.cpp" />
     <ClCompile Include="Test\Test_traits.cpp" />
+    <ClCompile Include="Test\Test_float_denorm_style.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docs\compute_default_alignment.html" />
@@ -197,11 +203,16 @@
     <None Include="Docs\EIGEN_ALIGN_TO_BOUNDARY.html" />
     <None Include="Docs\EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.html" />
     <None Include="Docs\EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.html" />
+    <None Include="Docs\float_denorm_style.html" />
+    <None Include="Docs\float_round_style.html" />
+    <None Include="Docs\NumTraits.html" />
     <None Include="Docs\plain_array.html" />
+    <None Include="Docs\numeric_limits.html" />
     <None Include="Docs\介绍.html" />
     <None Include="Docs\内存块.html" />
     <None Include="index.html" />
     <None Include="packages.config" />
+    <None Include="Test\default_digits10_impl.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,138 @@
+        std::cout << "float dummy_precision:" << NumTraits< float>::dummy_precision() << std::endl;
+        std::cout << "float IsInteger:" << NumTraits< float>::IsInteger << std::endl;
+        std::cout << "float IsSigned:" << NumTraits< float>::IsSigned << std::endl;
+        std::cout << "float IsComplex:" << NumTraits< float>::IsComplex << std::endl;
+        std::cout << "float RequireInitialization:" << NumTraits< float>::RequireInitialization << std::endl;
+        std::cout << "float ReadCost:" << NumTraits< float>::ReadCost << std::endl;
+        std::cout << "float AddCost:" << NumTraits< float>::AddCost << std::endl;
+        std::cout << "float MulCost:" << NumTraits< float>::MulCost << std::endl;
+        std::cout << "float Real:" << typeid(NumTraits< float>::Real).name() << std::endl;
+        std::cout << "float NonInteger:" << typeid(NumTraits< float>::NonInteger).name() << std::endl;
+        std::cout << "float Nested:" << typeid(NumTraits< float>::Nested).name() << std::endl;
+        std::cout << "float Literal:" << typeid(NumTraits< float>::Literal).name() << std::endl;
+        std::cout << "float digits10:" << NumTraits< float>::epsilon() << std::endl;
+        std::cout << "float digits10:" << NumTraits< float>::digits10() << std::endl;
+        std::cout << "float digits:" << NumTraits< float>::digits() << std::endl;
+        std::cout << "float min_exponent:" << NumTraits< float>::min_exponent() << std::endl;
+        std::cout << "float max_exponent:" << NumTraits< float>::max_exponent() << std::endl;
+        std::cout << "float highest:" << NumTraits< float>::highest() << std::endl;
+        std::cout << "float lowest:" << NumTraits< float>::lowest() << std::endl;
+        std::cout << "float infinity:" << NumTraits< float>::infinity() << std::endl;
+        std::cout << "float quiet_NaN:" << NumTraits< float>::quiet_NaN() << std::endl;
+
+运行结果
+float dummy_precision:1e-05
+float IsInteger:0
+float IsSigned:1
+float IsComplex:0
+float RequireInitialization:0
+float ReadCost:1
+float AddCost:1
+float MulCost:1
+float Real:float
+float NonInteger:float
+float Nested:float
+float Literal:float
+float digits10:1.19209e-07
+float digits10:6
+float digits:24
+float min_exponent:-125
+float max_exponent:128
+float highest:3.40282e+38
+float lowest:-3.40282e+38
+float infinity:inf
+float quiet_NaN:nan
+
+1. dummy_precision: 1e-05
+含义：用于“模糊等于”“松弛容忍比较”等场合的默认精度，有点像算法默认阈值。
+在这个实现（Eigen 源码里 float dummy_precision=0）：可能是用户定制了非零值，或者你输出的示例用了自定义实现。
+标准 Eigen 3.x 的 dummy_precision 通常直接返回 Real(0)，没特别设定。
+作用：区分 epsilon（机器极精度）和容忍误差场景的默认阈值（如近似相等/“几乎为零”时用 dummy_precision，更鲁棒）。
+
+2. IsInteger: 0
+含义：是否为整数类型
+float 属于浮点数，不是整数，故为 0。
+实现：std::numeric_limits< float>::is_integer，即 C++ 标准库 traits 属性。
+实现：std::numeric_limits< float>::is_integer，即 C++标准库的 traits 属性。
+
+3. IsSigned: 1
+含义：是否为有符号类型
+float 有正有负，是有符号数，结果为 1。
+实现：std::numeric_limits< float>::is_signed
+
+4. IsComplex: 0
+含义：是否为复数类型（特指 std::complex 或自定义 Complex）
+float 是实数，不是 std::complex，结果为 0。
+设计理由：分离实数与复数的数值特性。
+
+5. RequireInitialization: 0
+含义：创建对象是否需要调用构造函数（比如类、复杂对象需要，原生算术类型不需要）
+float 是原生算术类型，不需特殊构造，返回 0。
+底层详细实现常通过自定义 traits 检查 is_arithmetic< T>。
+
+6. ReadCost, AddCost, MulCost: 1
+含义：假设已在 CPU 寄存器中，float 的读取、加法、乘法成本。
+默认估值每项=1，即一条硬件指令的“粗略权重”。这里不完全精确，因为不同架构性能不同。
+用于 Eigen 表达式模板等自动优化机制做粗粒度“算力推断”。
+高级补充：对 SIMD、特殊类型、定制数值类型会有其它特化！
+
+7. Real: float
+含义：所谓“实部类型”——对于实数就是自己，对于复数就是实部的那种标量。
+float 的 Real 类型就是 float 本身。
+复数（如 std::complex< double>）的 Real 类型则是 double。
+用途：算法中需实部参与时自动解包（如比较、eps、数值稳定等）。
+
+8. NonInteger: float
+含义：执行开方、除法等返回非整数结果时，应该自动提升成什么类型。
+整数（如 int16_t）时通常 promotion 到 float/double；float 自己则仍为 float。
+用 conditional 模板自动推断，实数本身则不变。
+
+9. Nested: float
+含义：嵌入表达式模板中的类型，通常就是 T 本身。
+意义仅在高级表达式模板元编程/类型延迟绑定（Eigen 支持懒惰求值时需要）。
+
+10. Literal: float
+含义：用于数值字面量（如 2、0.5）的类型。对复数类型是其实部，对 float 就是 float。
+用途：模板中生成数值常量时保证类型兼容。
+
+11. epsilon(): 1.19209e-07
+含义：机器极精度（machine epsilon），即 1 与 1+ε 能分辨时 ε 的最小值。
+float 精度为 2^-23 ≈ 1.19209e-07。
+作用：判断浮点比较、舍入误差、数值稳定性等。
+
+12. digits10(): 6
+含义：float 能无损表示的十进制有效数字个数，即 N 位十进制数字保证 round-trip 到 float 不丢失精度。
+float 为 6（IEEE 754 float 标准，23位尾数）。
+来源：std::numeric_limits< float>::digits10。
+
+13. digits(): 24
+含义：以二进制基数表示，有效位数/尾数精度，float 为 24（23 存储位+1 隐含位）。
+用途：用于二进制精度分析及底层数学库。
+
+14. min_exponent(): -125
+含义：最小规格化浮点数的指数（不包括 subnormal），即 float 能表达的最小 2 次幂 - 1（IEEE 754）。
+float 为 -125；其可表达非0值为 2^-126（IEEE754 0x00800000），小于再往下只有非规格化数。
+
+15. max_exponent(): 128
+含义：最大规格化指数（即最大 float = 2^128-1 bit位，但数值略低于 2^128）。
+float 最大规格化指数 = 128，物理最大 float = (2-2^-23)*2^127 ≈ 3.40282e+38。
+
+16. highest(): 3.40282e+38
+含义：float 可表达的最大正数。
+实现：std::numeric_limits<float>::max()
+物理极限：往上则溢出为 inf。
+
+17. lowest(): -3.40282e+38
+含义：float 可表达的最小负数。
+如果整数类型 lowest = std::numeric_limits< T>::min()，否则 -max()（float 类型是 -3.40282e+38）。
+注意：浮点型 min 并不是最负，而是最小正非零数（这是 IEEE754 的历史原因）。
+
+18. infinity(): inf
+含义：float 的无穷大（正无穷）。
+std::numeric_limits< float>::infinity()
+特殊处理：浮点运算如 1/0、溢出等返回此值。
+
+19. quiet_NaN(): nan
+含义：float 的非信号型“不是数字”（Not a Number）。
+std::numeric_limits< float>::quiet_NaN()
+作用：表示未定义/不确定数学操作（如 0/0, sqrt(-1)），不触发异常。
