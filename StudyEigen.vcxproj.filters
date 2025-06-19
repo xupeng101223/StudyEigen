@@ -144,6 +144,10 @@
     </ClInclude>
     <ClInclude Include="EIGEN_HAS_RVALUE_REFERENCES.h" />
     <ClInclude Include="conditional_aligned_delete_auto.h" />
+    <ClInclude Include="conditional_aligned_realloc_new_auto.h" />
+    <ClInclude Include="conditional_aligned_realloc.h" />
+    <ClInclude Include="aligned_realloc.h" />
+    <ClInclude Include="handmade_aligned_realloc.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

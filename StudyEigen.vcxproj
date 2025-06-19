@@ -108,6 +108,7 @@
     <ClInclude Include="add_const_on_value_type_if_arithmetic.h" />
     <ClInclude Include="aligned_free.h" />
     <ClInclude Include="aligned_malloc.h" />
+    <ClInclude Include="aligned_realloc.h" />
     <ClInclude Include="AlignmentType.h" />
     <ClInclude Include="compute_default_alignment.h" />
     <ClInclude Include="compute_default_alignment_helper.h" />
@@ -117,6 +118,8 @@
     <ClInclude Include="conditional_aligned_free.h" />
     <ClInclude Include="conditional_aligned_malloc.h" />
     <ClInclude Include="conditional_aligned_new_auto.h" />
+    <ClInclude Include="conditional_aligned_realloc.h" />
+    <ClInclude Include="conditional_aligned_realloc_new_auto.h" />
     <ClInclude Include="construct_elements_of_array.h" />
     <ClInclude Include="default_digits10_impl.h" />
     <ClInclude Include="default_digits_impl.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="GenericNumTraits.h" />
     <ClInclude Include="handmade_aligned_free.h" />
     <ClInclude Include="handmade_aligned_malloc.h" />
+    <ClInclude Include="handmade_aligned_realloc.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="IntPtr.h" />
     <ClInclude Include="is_arithmetic.h" />
