@@ -106,34 +106,52 @@
     <ClInclude Include="AccessorLevels.h" />
     <ClInclude Include="add_const_on_value_type.h" />
     <ClInclude Include="add_const_on_value_type_if_arithmetic.h" />
+    <ClInclude Include="aligned_free.h" />
+    <ClInclude Include="aligned_malloc.h" />
     <ClInclude Include="AlignmentType.h" />
     <ClInclude Include="compute_default_alignment.h" />
     <ClInclude Include="compute_default_alignment_helper.h" />
     <ClInclude Include="compute_matrix_flags.h" />
     <ClInclude Include="conditional.h" />
+    <ClInclude Include="conditional_aligned_delete_auto.h" />
+    <ClInclude Include="conditional_aligned_free.h" />
+    <ClInclude Include="conditional_aligned_malloc.h" />
+    <ClInclude Include="conditional_aligned_new_auto.h" />
+    <ClInclude Include="construct_elements_of_array.h" />
     <ClInclude Include="default_digits10_impl.h" />
     <ClInclude Include="default_digits_impl.h" />
     <ClInclude Include="default_packet_traits.h" />
     <ClInclude Include="Dense.h" />
     <ClInclude Include="DenseCoeffsBase.h" />
     <ClInclude Include="DenseStorage.h" />
+    <ClInclude Include="destruct_elements_of_array.h" />
     <ClInclude Include="DirectAccessBit.h" />
+    <ClInclude Include="Docs\handmade_aligned_malloc.h" />
     <ClInclude Include="Dynamic.h" />
     <ClInclude Include="EigenBase.h" />
     <ClInclude Include="EIGEN_ALIGN_TO_BOUNDARY.h" />
     <ClInclude Include="eigen_assert.h" />
+    <ClInclude Include="EIGEN_CATCH.h" />
     <ClInclude Include="EIGEN_CONSTEXPR.h" />
+    <ClInclude Include="EIGEN_DEFAULT_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_DEFAULT_DENSE_INDEX_TYPE.h" />
     <ClInclude Include="EIGEN_DEVICE_FUNC.h" />
     <ClInclude Include="EIGEN_FAST_MATH.h" />
+    <ClInclude Include="EIGEN_HAS_RVALUE_REFERENCES.h" />
     <ClInclude Include="EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.h" />
     <ClInclude Include="EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.h" />
+    <ClInclude Include="EIGEN_MALLOC_ALREADY_ALIGNED.h" />
     <ClInclude Include="EIGEN_MAX_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_MAX_STATIC_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_MIN_ALIGN_BYTES.h" />
     <ClInclude Include="EIGEN_NOEXCEPT.h" />
+    <ClInclude Include="EIGEN_OS_WIN.h" />
+    <ClInclude Include="EIGEN_OS_WIN64.h" />
     <ClInclude Include="eigen_packet_wrapper.h" />
     <ClInclude Include="eigen_plain_assert.h" />
+    <ClInclude Include="EIGEN_THROW.h" />
+    <ClInclude Include="EIGEN_THROW_X.h" />
+    <ClInclude Include="EIGEN_TRY.h" />
     <ClInclude Include="EIGEN_UNALIGNED_VECTORIZE.h" />
     <ClInclude Include="evaluator.h" />
     <ClInclude Include="evaluator_traits.h" />
@@ -141,14 +159,13 @@
     <ClInclude Include="find_best_packet.h" />
     <ClInclude Include="find_best_packet_helper.h" />
     <ClInclude Include="GenericNumTraits.h" />
+    <ClInclude Include="handmade_aligned_free.h" />
+    <ClInclude Include="handmade_aligned_malloc.h" />
     <ClInclude Include="Index.h" />
+    <ClInclude Include="IntPtr.h" />
     <ClInclude Include="is_arithmetic.h" />
     <ClInclude Include="is_same.h" />
     <ClInclude Include="LinearAccessBit.h" />
-    <ClInclude Include="LrfDerived.h" />
-    <ClInclude Include="LrfHasCols.h" />
-    <ClInclude Include="LrfHasRows.h" />
-    <ClInclude Include="LrfHasEvalTo.h" />
     <ClInclude Include="LRF_AVX.h" />
     <ClInclude Include="LRF_SSE.h" />
     <ClInclude Include="EIGEN_STRONG_INLINE.h" />
@@ -164,9 +181,12 @@
     <ClInclude Include="packet_traits.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="plain_array.h" />
+    <ClInclude Include="plain_array_helper.h" />
     <ClInclude Include="RowMajorBit.h" />
     <ClInclude Include="size_at_compile_time.h" />
     <ClInclude Include="smart_copy.h" />
+    <ClInclude Include="smart_copy_helper.h" />
+    <ClInclude Include="smart_move.h" />
     <ClInclude Include="StorageOptions.h" />
     <ClInclude Include="SupportAvx512.h" />
     <ClInclude Include="traits.h" />
@@ -182,6 +202,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test\TestDenseCoeffsBase.cpp" />
+    <ClCompile Include="Test\TestDenseStorage.cpp" />
     <ClCompile Include="Test\TestEigenBase.cpp" />
     <ClCompile Include="Test\TestNumTraits.cpp" />
     <ClCompile Include="Test\TestSupportAvx512.cpp" />
@@ -198,21 +219,29 @@
     <ClCompile Include="Test\Test_float_denorm_style.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Docs\aligned_malloc.html" />
     <None Include="Docs\compute_default_alignment.html" />
     <None Include="Docs\DenseStorage.html" />
     <None Include="Docs\EIGEN_ALIGN_TO_BOUNDARY.html" />
     <None Include="Docs\EIGEN_INTERNAL_DENSE_STORAGE_CTOR_PLUGIN.html" />
     <None Include="Docs\EIGEN_MAKE_UNALIGNED_ARRAY_ASSERT.html" />
+    <None Include="Docs\EIGEN_MAX_STATIC_ALIGN_BYTES.html" />
+    <None Include="Docs\EIGEN_MIN_ALIGN_BYTES.html" />
     <None Include="Docs\float_denorm_style.html" />
     <None Include="Docs\float_round_style.html" />
     <None Include="Docs\NumTraits.html" />
     <None Include="Docs\plain_array.html" />
     <None Include="Docs\numeric_limits.html" />
+    <None Include="Docs\plain_array_helper.html" />
+    <None Include="Docs\smart_copy_helper.html" />
     <None Include="Docs\介绍.html" />
     <None Include="Docs\内存块.html" />
     <None Include="index.html" />
     <None Include="packages.config" />
     <None Include="Test\default_digits10_impl.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

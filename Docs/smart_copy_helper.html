@@ -1,0 +1,28 @@
+template< typename T, bool UseMemcpy>
+struct smart_copy_helper;
+
+template< typename T>
+struct smart_copy_helper< T, true>
+{
+        EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void
+                run(const T* start, const T* end, T* target)
+        {
+                IntPtr size = IntPtr(end) - IntPtr(start);
+                if (size == 0) return;
+                eigen_assert(start != 0 && end != 0 && target != 0);
+                std::memcpy(target, start, size);
+        }
+};
+
+template< typename T> struct smart_copy_helper< T, false>
+{
+        EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void
+        run(const T* start, const T* end, T* target)
+        {
+                std::copy(start, end, target);
+        }
+};
+
+和 memcpy 区别：
+std::copy 会调对象的拷贝赋值运算符，类型安全并自动处理复杂类型；
+memcpy 只做原始字节拷贝，对非 POD 类型不安全。

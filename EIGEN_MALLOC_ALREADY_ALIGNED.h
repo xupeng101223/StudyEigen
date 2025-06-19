@@ -1,0 +1,9 @@
+#pragma once
+#include "EIGEN_OS_WIN64.h"
+#include "EIGEN_DEFAULT_ALIGN_BYTES.h"
+
+#if (EIGEN_OS_WIN64 && EIGEN_DEFAULT_ALIGN_BYTES == 16)
+        #define EIGEN_MALLOC_ALREADY_ALIGNED 1
+#else
+        #define EIGEN_MALLOC_ALREADY_ALIGNED 0
+#endif

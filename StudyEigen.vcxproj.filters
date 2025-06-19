@@ -47,6 +47,9 @@
     <ClCompile Include="Test\Test_default_digits10_impl.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Test\TestDenseStorage.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -94,10 +97,6 @@
     <ClInclude Include="EIGEN_DEVICE_FUNC.h" />
     <ClInclude Include="EIGEN_NOEXCEPT.h" />
     <ClInclude Include="Index.h" />
-    <ClInclude Include="LrfDerived.h" />
-    <ClInclude Include="LrfHasCols.h" />
-    <ClInclude Include="LrfHasRows.h" />
-    <ClInclude Include="LrfHasEvalTo.h" />
     <ClInclude Include="EIGEN_STRONG_INLINE.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="packet_traits.h" />
@@ -119,6 +118,32 @@
     <ClInclude Include="default_digits10_impl.h" />
     <ClInclude Include="NumTraits.h" />
     <ClInclude Include="default_digits_impl.h" />
+    <ClInclude Include="plain_array_helper.h" />
+    <ClInclude Include="smart_copy_helper.h" />
+    <ClInclude Include="IntPtr.h" />
+    <ClInclude Include="smart_move.h" />
+    <ClInclude Include="aligned_free.h" />
+    <ClInclude Include="aligned_malloc.h" />
+    <ClInclude Include="conditional_aligned_free.h" />
+    <ClInclude Include="conditional_aligned_malloc.h" />
+    <ClInclude Include="conditional_aligned_new_auto.h" />
+    <ClInclude Include="construct_elements_of_array.h" />
+    <ClInclude Include="destruct_elements_of_array.h" />
+    <ClInclude Include="EIGEN_CATCH.h" />
+    <ClInclude Include="EIGEN_DEFAULT_ALIGN_BYTES.h" />
+    <ClInclude Include="EIGEN_MALLOC_ALREADY_ALIGNED.h" />
+    <ClInclude Include="EIGEN_OS_WIN.h" />
+    <ClInclude Include="EIGEN_OS_WIN64.h" />
+    <ClInclude Include="EIGEN_THROW.h" />
+    <ClInclude Include="EIGEN_THROW_X.h" />
+    <ClInclude Include="EIGEN_TRY.h" />
+    <ClInclude Include="handmade_aligned_free.h" />
+    <ClInclude Include="handmade_aligned_malloc.h" />
+    <ClInclude Include="Docs\handmade_aligned_malloc.h">
+      <Filter>Docs</Filter>
+    </ClInclude>
+    <ClInclude Include="EIGEN_HAS_RVALUE_REFERENCES.h" />
+    <ClInclude Include="conditional_aligned_delete_auto.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -162,6 +187,21 @@
     <None Include="Docs\NumTraits.html">
       <Filter>Docs</Filter>
     </None>
+    <None Include="Docs\EIGEN_MAX_STATIC_ALIGN_BYTES.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\EIGEN_MIN_ALIGN_BYTES.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\smart_copy_helper.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\plain_array_helper.html">
+      <Filter>Docs</Filter>
+    </None>
+    <None Include="Docs\aligned_malloc.html">
+      <Filter>Docs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Test">
@@ -170,5 +210,8 @@
     <Filter Include="Docs">
       <UniqueIdentifier>{49896659-a4b6-49f9-b040-8f37a1c2e9ca}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
   </ItemGroup>
 </Project>

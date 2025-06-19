@@ -1,0 +1,11 @@
+#elif defined(__AVX512F__)
+  // 64 bytes static alignment is preferred only if really required
+  #define EIGEN_IDEAL_MAX_ALIGN_BYTES 64
+#elif defined(__AVX__)
+  // 32 bytes static alignment is preferred only if really required
+  #define EIGEN_IDEAL_MAX_ALIGN_BYTES 32
+#else
+  #define EIGEN_IDEAL_MAX_ALIGN_BYTES 16
+#endif
+
+SSE要求16字节对齐，AVX32字节，AVX512是64字节

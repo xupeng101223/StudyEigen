@@ -1,0 +1,35 @@
+#pragma once
+#include "EIGEN_DEVICE_FUNC.h"
+#include "EIGEN_STRONG_INLINE.h"
+#include "EIGEN_DEFAULT_ALIGN_BYTES.h"
+#include "EIGEN_MALLOC_ALREADY_ALIGNED.h"
+#include < cstddef>
+#include < cstdlib>
+#include "eigen_assert.h"
+
+EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
+void* aligned_malloc(std::size_t size)
+{
+        void* result;
+#if (EIGEN_DEFAULT_ALIGN_BYTES == 0) || EIGEN_MALLOC_ALREADY_ALIGNED
+        result = std::malloc(size);
+
+#if EIGEN_DEFAULT_ALIGN_BYTES==16
+        eigen_assert((size < 16 || (std::size_t(result) % 16) == 0));
+#endif
+
+#else
+        result = handmade_aligned_malloc(size);
+#endif
+
+        if (!result && size)
+                throw_std_bad_alloc();
+
+        return result;
+}
+
+为什么只会比较16字节对齐？
+因为malloc天然满足4，8对齐要求；
+64位系统: 多数libc实现使malloc总是16字节对齐，兼容SSE。
+EIGEN_MALLOC_ALREADY_ALIGNED 中也可以看到，只会当EIGEN_DEFAULT_ALIGN_BYTES为16的时候才会为1
+也就是说，高于16字节对齐的就会使用后面的handmade_aligned_malloc 来进行处理

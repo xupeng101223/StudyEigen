@@ -1,0 +1,67 @@
+﻿
+#pragma once
+#include "EIGEN_DEVICE_FUNC.h"
+#include "EIGEN_STRONG_INLINE.h"
+#include "plain_array.h"
+#include "smart_copy.h"
+#include "smart_move.h"
+#include "Index.h"
+#include < algorithm>
+struct plain_array_helper 
+{
+        template< typename T, int Size, int MatrixOrArrayOptions, int Alignment>
+        EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void
+        copy(const plain_array< T, Size, MatrixOrArrayOptions, Alignment>& src, const Eigen::Index size, plain_array<T, Size, MatrixOrArrayOptions, Alignment>& dst)
+        {
+                smart_copy(src.array, src.array + size, dst.array);
+        }
+
+        template< typename T, int Size, int MatrixOrArrayOptions, int Alignment>
+        EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void 
+        swap(plain_array< T, Size, MatrixOrArrayOptions, Alignment>& a, const Eigen::Index a_size, plain_array<T, Size, MatrixOrArrayOptions, Alignment>
+        & b, const Eigen::Index b_size)
+        {
+        if (a_size < b_size) {
+        std::swap_ranges(b.array, b.array + a_size, a.array);
+        smart_move(b.array + a_size, b.array + b_size, a.array + a_size);
+        }
+        else if (a_size > b_size) {
+        std::swap_ranges(a.array, a.array + b_size, b.array);
+        smart_move(a.array + b_size, a.array + a_size, b.array + b_size);
+        }
+        else {
+        std::swap_ranges(a.array, a.array + a_size, b.array);
+        }
+        }
+        };
+
+        1. a_size < b_size
+
+        std::swap_ranges(b.array, b.array + a_size, a.array);
+        这一步交换 a 和 b 前 a_size 个元素。
+        拆解：对每一个 i in [0, a_size)，a[i] ? b[i]。
+        smart_move(b.array + a_size, b.array + b_size, a.array + a_size);
+
+        接着，b 里剩下 [a_size, b_size) 范围的元素通过 std::move 移动到 a 那边 [a_size, b_size)。
+        b 变短，a 变长。实际上把 b 剩下的“尾巴”整体移到 a 的末尾，这是高效的内存移动，特别当元素支持 move ctor 且移动代价低时。
+        
+        2. a_size > b_size
+        std::swap_ranges(a.array, a.array + b_size, b.array);
+        交换 b_size 个元素，类似前面，但范围由小数组长度决定。
+        smart_move(a.array + b_size, a.array + a_size, b.array + b_size);
+
+        a 的多余“尾巴”移动到 b 的相应末尾。
+
+
+        3.a_size == b_size
+
+        std::swap_ranges(a.array, a.array + a_size, b.array);
+        元素一对一完全交换。
+
+        std::swap_ranges
+        本质上对每一对 a[i]/b[i] 都是两次（或多次）赋值（含移动构造或者拷贝构造，视元素类型而定），语义如同：
+        temp = std::move(a[i]);
+        a[i] = std::move(b[i]);
+        b[i] = std::move(temp);
+        对于 POD 类型（比如 int、float），就是值传递；
+        对于重型对象（比如 std::string / Eigen::MatrixXd），这里会优先用move优化
